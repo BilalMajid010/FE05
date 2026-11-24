@@ -1,13 +1,164 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>fe05</title>
-  </head>
-  <body>
-    <div id="app"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Employee management application using REST APIs">
+    <title>Employee Management | FE05</title>
+    <link rel="stylesheet" href="/src/style.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="container header-content">
+            <a href="/" class="logo">Employ<span>Hub</span></a>
+            <span class="header-label">Employee Management System</span>
+        </div>
+    </header>
+
+    <main class="container main-content">
+
+        <section class="page-heading">
+            <div>
+                <p class="eyebrow">MANAGEMENT DASHBOARD</p>
+                <h1>Employee Directory</h1>
+                <p class="subtitle">Manage your employees and their information.</p>
+            </div>
+            <button class="btn btn-primary" id="addEmployeeBtn">
+                + Add Employee
+            </button>
+        </section>
+
+        <section class="stats-grid">
+            <article class="stat-card">
+                <span class="stat-label">Total Employees</span>
+                <h2 id="totalEmployees">0</h2>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Companies</span>
+                <h2 id="totalCompanies">0</h2>
+            </article>
+            <article class="stat-card">
+                <span class="stat-label">Showing Employees</span>
+                <h2 id="showingEmployees">0</h2>
+            </article>
+        </section>
+
+        <section class="form-card hidden" id="formSection">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">EMPLOYEE INFORMATION</p>
+                    <h2 id="formTitle">Add New Employee</h2>
+                </div>
+                <button class="close-btn" id="closeFormBtn" aria-label="Close form">
+                    &times;
+                </button>
+            </div>
+
+            <form id="employeeForm" novalidate>
+                <input type="hidden" id="employeeId">
+
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="employeeName">Full Name</label>
+                        <input type="text" id="employeeName" placeholder="Enter full name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="employeeEmail">Email Address</label>
+                        <input type="email" id="employeeEmail" placeholder="Enter email address" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="employeePhone">Phone Number</label>
+                        <input type="tel" id="employeePhone" placeholder="Enter phone number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="employeeCompany">Company</label>
+                        <input type="text" id="employeeCompany" placeholder="Enter company name" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="employeeWebsite">Website</label>
+                        <input type="text" id="employeeWebsite" placeholder="Enter website">
+                    </div>
+                </div>
+
+                <p class="form-error" id="formError" role="alert"></p>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-secondary" id="cancelFormBtn">
+                        Cancel
+                    </button>
+                    <button type="submit" class="btn btn-primary" id="submitBtn">
+                        Save Employee
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <section class="employees-section">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">EMPLOYEE RECORDS</p>
+                    <h2>All Employees</h2>
+                </div>
+                <span class="record-count" id="recordCount">0 records</span>
+            </div>
+
+            <div class="filters">
+                <div class="search-box">
+                    <input type="search" id="searchInput" placeholder="Search by name, email or phone...">
+                </div>
+
+                <select id="companyFilter" aria-label="Filter by company">
+                    <option value="All">All Companies</option>
+                </select>
+
+                <select id="sortSelect" aria-label="Sort employees">
+                    <option value="name-asc">Name: A to Z</option>
+                    <option value="name-desc">Name: Z to A</option>
+                    <option value="id-asc">ID: Lowest First</option>
+                    <option value="id-desc">ID: Highest First</option>
+                </select>
+            </div>
+
+            <div class="message hidden" id="loadingMessage">
+                Loading employees...
+            </div>
+
+            <div class="message error-message hidden" id="errorMessage" role="alert"></div>
+
+            <div class="message hidden" id="emptyMessage">
+                No employees found.
+            </div>
+
+            <div class="table-wrapper" id="tableWrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Employee</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Company</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="employeeTable"></tbody>
+                </table>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+        </section>
+
+    </main>
+
+    <footer class="footer">
+        <p>FE05 - API-Based Employee Management Application</p>
+    </footer>
+
     <script type="module" src="/src/main.js"></script>
-  </body>
+</body>
 </html>
